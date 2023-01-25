@@ -1,0 +1,30 @@
+{
+  "name": "svelte-icons",
+  "version": "0.0.1",
+  "main": "dist/index.js",
+  "module": "dist/index.mjs",
+  "svelte": "src/index.js",
+  "devDependencies": {
+    "camelcase": "^7.0.0",
+    "esbuild": "^0.15.11",
+    "esbuild-register": "^3.3.3",
+    "glob": "^8.0.3",
+    "glob-promise": "^5.0.0",
+    "p-queue": "^7.3.0",
+    "feather-icons": "^4.7.3",
+    "ionicons": "^4.4.4",
+    "ionicons-5": "npm:ionicons@5",
+    "octicons": "^8.1.0",
+    "prettier": "^2.7.1",
+    "typescript": "^4.8.4",
+    "rollup": "^2.39.0",
+    "rollup-plugin-node-resolve": "^5.2.0",
+    "rollup-plugin-svelte": "^7.1.0",
+    "svelte": "^3.32.3"
+  },
+  "scripts": {
+    "build": "rollup -c",
+    "dev": "rollup -c -w",
+    "fetch": "node -r esbuild-register ./scripts/fetcher.ts"
+  }
+}
