@@ -1,9 +1,11 @@
 {
-  "name": "svelte-icons",
-  "version": "0.0.1",
+  "name": "svelte-symbols",
+  "version": "1.0.0",
   "main": "dist/index.js",
-  "module": "dist/index.mjs",
-  "svelte": "src/index.js",
+  "svelte": "dist/index.js",
+  "files": [
+    "dist"
+  ],
   "devDependencies": {
     "camelcase": "^7.0.0",
     "esbuild": "^0.15.11",
@@ -20,11 +22,13 @@
     "rollup": "^2.39.0",
     "rollup-plugin-node-resolve": "^5.2.0",
     "rollup-plugin-svelte": "^7.1.0",
+    "svgo": "^1.3.2",
     "svelte": "^3.32.3"
   },
   "scripts": {
     "build": "rollup -c",
     "dev": "rollup -c -w",
-    "fetch": "node -r esbuild-register ./scripts/fetcher.ts"
+    "fetch": "node -r esbuild-register ./scripts/fetcher.ts",
+    "icons": "node -r esbuild-register ./scripts/build.ts"
   }
 }

@@ -3,5 +3,5 @@ dist
 build
 node_modules
 .svelte-kit
-icons
+/icons
 yarn.lock

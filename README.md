@@ -1,1 +1,1 @@
-# Svelte Icons
+# Svelte symbols 

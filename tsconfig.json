@@ -13,6 +13,6 @@
     "types": ["svelte"],
     "allowSyntheticDefaultImports": true
   },
-  "include": ["src/**/*.ts"],
+  "include": ["src/**/*.ts", "scripts/templates.ts", "ai/AiFillA.tls", "ai/AiFillAlert.js"],
   "exclude": ["icons"]
 }
