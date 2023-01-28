@@ -1,15 +1,17 @@
 {
   "name": "svelte-symbols",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "main": "dist/index.js",
   "svelte": "dist/index.js",
   "files": [
     "dist"
   ],
+  "license": "MIT",
   "repository": {
     "type": "git",
     "url": "https://github.com/IllustriousLoop/svelte-symbols"
   },
+  "homepage": "",
   "bugs": {
     "url": "https://github.com/IllustriousLoop/svelte-symbols/issues"
   },

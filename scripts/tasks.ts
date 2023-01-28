@@ -28,6 +28,16 @@ export async function dirInit(home: string) {
   for (const file of initFiles) {
     await write([file], "// THIS FILE IS AUTO GENERATED\n");
   }
+
+  await fs.copyFile(
+    path.resolve(home, "../README.md"),
+    path.resolve(home, "README.md")
+  );
+
+  await fs.copyFile(
+    path.resolve(home, "../LICENSE"),
+    path.resolve(home, "LICENSE")
+  );
 }
 
 export async function writeIconModuleFiles(icon: IconDefinition, home: string) {
