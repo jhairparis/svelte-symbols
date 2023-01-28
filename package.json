@@ -6,6 +6,13 @@
   "files": [
     "dist"
   ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/IllustriousLoop/svelte-symbols"
+  },
+  "bugs": {
+    "url": "https://github.com/IllustriousLoop/svelte-symbols/issues"
+  },
   "devDependencies": {
     "camelcase": "^7.0.0",
     "esbuild": "^0.15.11",

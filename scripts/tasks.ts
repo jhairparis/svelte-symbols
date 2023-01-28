@@ -43,10 +43,11 @@ export async function writeIconModuleFiles(icon: IconDefinition, home: string) {
         ? await svgo.optimize(svgStrRaw).then((result) => result.data)
         : svgStrRaw;
 
-      const regex = /<svg(.|\n)*<\/svg>/;
+      const regex = /<svg[\s\S]*<\/svg>/;
       let validation = regex.exec(svgStr);
+      if (!validation) throw "Error parsing SVG";
 
-      const svgStrClean = validation ? validation[0] : svgStr;
+      const svgStrClean = validation[0];
 
       const rawName = path.basename(file, path.extname(file));
       const pascalName = camelcase(rawName, { pascalCase: true });
