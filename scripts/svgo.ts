@@ -1,116 +1,31 @@
-import SVGO from "svgo";
+import svgo from "svgo";
 
-export const svgo = new SVGO({
-  plugins: [
-    {
-      cleanupAttrs: true,
-    },
-    {
-      removeDoctype: true,
-    },
-    {
-      removeXMLProcInst: true,
-    },
-    {
-      removeComments: true,
-    },
-    {
-      removeMetadata: true,
-    },
-    {
-      removeTitle: true,
-    },
-    {
-      removeDesc: true,
-    },
-    {
-      removeUselessDefs: true,
-    },
-    {
-      removeEditorsNSData: true,
-    },
-    {
-      removeEmptyAttrs: true,
-    },
-    {
-      removeHiddenElems: true,
-    },
-    {
-      removeEmptyText: true,
-    },
-    {
-      removeEmptyContainers: true,
-    },
-    {
-      removeViewBox: false,
-    },
-    {
-      cleanupEnableBackground: true,
-    },
-    {
-      convertStyleToAttrs: true,
-    },
-    {
-      convertColors: {
-        currentColor: true,
+const SVG_Optimized = (Str: string): string => {
+  const { data } = svgo.optimize(Str, {
+    multipass: true,
+    plugins: [
+      {
+        name: "preset-default",
       },
-    },
-    {
-      convertPathData: true,
-    },
-    {
-      convertTransform: true,
-    },
-    {
-      removeUnknownsAndDefaults: true,
-    },
-    {
-      removeNonInheritableGroupAttrs: true,
-    },
-    {
-      removeUselessStrokeAndFill: true,
-    },
-    {
-      removeUnusedNS: true,
-    },
-    {
-      cleanupIDs: true,
-    },
-    {
-      cleanupNumericValues: true,
-    },
-    {
-      moveElemsAttrsToGroup: true,
-    },
-    {
-      moveGroupAttrsToElems: true,
-    },
-    {
-      collapseGroups: true,
-    },
-    {
-      removeRasterImages: false,
-    },
-    {
-      mergePaths: true,
-    },
-    {
-      convertShapeToPath: true,
-    },
-    {
-      sortAttrs: true,
-    },
-    {
-      removeDimensions: true,
-    },
-    {
-      removeAttributesBySelector: {
-        selector: "*:not(svg)",
-        attributes: ["stroke"],
+      {
+        name: "removeAttrs",
+        params: {
+          attrs: ["class", "width", "height"],
+        },
       },
-    },
-    {
-      removeAttrs: { attrs: "data.*" },
-    },
-  ],
-});
+      {
+        name: "addAttributesToSVGElement",
+        params: {
+          attributes: [{ width: "{size}" }, { height: "{size}" }],
+        },
+      },
+    ],
+  });
+
+  // Add props customizing by user
+  const svg = data.replace(/\s/, " {...$$$restProps} ");
+
+  return svg;
+};
+
+export default SVG_Optimized;

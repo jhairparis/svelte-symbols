@@ -3,7 +3,7 @@ import { promises as fs } from "fs";
 import camelcase from "camelcase";
 import fileFormat from "./templates";
 import { getIconFiles } from "./logics";
-import { svgo } from "./svgo";
+import svgo from "./svgo";
 import { IconDefinition } from "./_types";
 import { icons } from "../src/icons";
 
@@ -49,15 +49,7 @@ export async function writeIconModuleFiles(icon: IconDefinition, home: string) {
     for (const file of files) {
       const svgStrRaw = await fs.readFile(file, "utf8");
 
-      const svgStr = content.processWithSVGO
-        ? await svgo.optimize(svgStrRaw).then((result) => result.data)
-        : svgStrRaw;
-
-      const regex = /<svg[\s\S]*<\/svg>/;
-      let validation = regex.exec(svgStr);
-      if (!validation) throw "Error parsing SVG";
-
-      const svgStrClean = validation[0];
+      const svgClean = svgo(svgStrRaw);
 
       const rawName = path.basename(file, path.extname(file));
       const pascalName = camelcase(rawName, { pascalCase: true });
@@ -67,14 +59,14 @@ export async function writeIconModuleFiles(icon: IconDefinition, home: string) {
       if (exists.has(name)) continue;
       exists.add(name);
 
-      const comRes = fileFormat(name, svgStrClean, "svelte");
+      const comRes = fileFormat(name, svgClean, "svelte");
       await fs.writeFile(
         path.resolve(home, icon.id, `${name}.svelte`),
         comRes,
         "utf8"
       );
 
-      const dtsRes = fileFormat(name, svgStrClean, "fileExport");
+      const dtsRes = fileFormat(name, svgClean, "fileExport");
       await fs.appendFile(
         path.resolve(home, icon.id, `index.js`),
         dtsRes,

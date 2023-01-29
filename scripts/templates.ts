@@ -6,7 +6,11 @@ export default function fileFormat(
 ) {
   switch (type) {
     case "svelte":
-      return `<script>let ${formattedName};</script>\n` + `${iconData}\n`;
+      return (
+        `<script>// THIS FILE IS AUTO GENERATED\n
+          export let size= 24;
+        </script>\n` + `${iconData}\n`
+      );
     case "fileExport":
       return (
         `import ${formattedName} from "./${formattedName}.svelte";\n` +
