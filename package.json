@@ -1,8 +1,23 @@
 {
   "name": "svelte-symbols",
-  "version": "2.0.6",
+  "version": "2.1.0",
+  "description": "Most popular icon pack for svelte",
+  "keywords": [
+    "svelte",
+    "sveltekit",
+    "All icons",
+    "svg icons",
+    "icons",
+    "popular icons"
+  ],
+  "author": {
+    "name": "IllustriousLoop",
+    "email": "illustriousloop@gmail.com",
+    "url": "https://jhairparis.com"
+  },
   "main": "dist/index.js",
   "svelte": "dist/index.js",
+  "type": "module",
   "files": [
     "dist"
   ],
@@ -11,7 +26,7 @@
     "type": "git",
     "url": "https://github.com/IllustriousLoop/svelte-symbols"
   },
-  "homepage": "",
+  "homepage": "svelte-symbols.jhairpariscom",
   "bugs": {
     "url": "https://github.com/IllustriousLoop/svelte-symbols/issues"
   },
