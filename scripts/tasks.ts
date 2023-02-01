@@ -43,7 +43,7 @@ export async function writeIconModuleFiles(icon: IconDefinition, home: string) {
 
 	await fs.appendFile(
 		path.resolve(home, icon.id, `index.d.ts`),
-		"// THIS FILE IS AUTO GENERATED\nimport { SvelteComponentTyped } from 'svelte/internal';\n",
+		"// THIS FILE IS AUTO GENERATED\n",
 		'utf8'
 	);
 	for (const content of icon.contents) {
@@ -70,8 +70,7 @@ export async function writeIconModuleFiles(icon: IconDefinition, home: string) {
 			const dts = fileFormat(name, svgClean, 'dts');
 			await fs.writeFile(path.resolve(home, icon.id, `${name}.svelte.d.ts`), dts, 'utf8');
 
-			const dtsIndx = fileFormat(name, svgClean, 'fileExportTS');
-			await fs.appendFile(path.resolve(home, icon.id, `index.d.ts`), dtsIndx, 'utf8');
+			await fs.appendFile(path.resolve(home, icon.id, `index.d.ts`), fileExp, 'utf8');
 
 			exists.add(file);
 		}

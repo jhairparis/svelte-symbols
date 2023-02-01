@@ -1,6 +1,6 @@
 {
   "name": "svelte-symbols",
-  "version": "2.1.0",
+  "version": "2.1.1",
   "description": "Most popular icon pack for svelte",
   "keywords": [
     "svelte",
@@ -55,7 +55,7 @@
     "dev": "rollup -c -w",
     "fetch": "node -r esbuild-register ./scripts/fetcher.ts",
     "icons": "node -r esbuild-register ./scripts/build.ts",
-    "format": "prettier --loglevel silent --write \"dist/**/*.{js,svelte}\" ",
+    "format": "prettier --loglevel silent --write \"dist/**/*.{js,svelte,ts}\" ",
     "ready": "yarn icons && yarn format"
   }
 }

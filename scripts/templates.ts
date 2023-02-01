@@ -17,8 +17,6 @@ export default function fileFormat(
 				`import ${formattedName} from "./${formattedName}.svelte";\n` +
 				`export {${formattedName}};\n`
 			);
-		case 'fileExportTS':
-			return `export declare const ${formattedName}: SvelteComponentTyped;\n`;
 		case 'dts':
 			return `
 /** @typedef {typeof __propDef.props}  ${formattedName}Props */
