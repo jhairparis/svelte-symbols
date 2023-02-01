@@ -15,13 +15,17 @@ const SVG_Optimized = (Str: string): string => {
 			{
 				name: 'removeAttrs',
 				params: {
-					attrs: ['class', 'width', 'height']
+					attrs: ['class', 'width', 'height', 'fill']
 				}
 			},
 			{
 				name: 'addAttributesToSVGElement',
 				params: {
-					attributes: [{ width: '{size}' }, { height: '{size}' }]
+					attributes: [
+						{ width: '{size}' },
+						{ height: '{size}' },
+						{ fill: "{color ? color: 'currentColor' }" }
+					]
 				}
 			}
 		]
