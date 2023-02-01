@@ -454,14 +454,14 @@ export const icons: IconDefinition[] = [
           __dirname,
           "../../icons/heroicons-2/optimized/24/solid/*.svg"
         ),
-        formatter: (name) => `Hi${name}`,
+        formatter: (name) => `Hi2${name}`,
       },
       {
         files: path.resolve(
           __dirname,
           "../../icons/heroicons-2/optimized/24/outline/*.svg"
         ),
-        formatter: (name) => `HiOutline${name}`,
+        formatter: (name) => `Hi2Outline${name}`,
       },
     ],
     projectUrl: "https://github.com/tailwindlabs/heroicons",
