@@ -1,4 +1,4 @@
-# Svelte symbols 
+# Svelte symbols
 
 Include popular icons in your Svelte projects easily with Svelte-symbols.
 
@@ -14,7 +14,7 @@ yarn add svelte-symbols
 
 ```html
 <script>
-   import FaBeer from "svelte-symbols/fa/FaBeer";
+   import FaBeer from "svelte-symbols/fa/FaBeer.svelte";
 </script>
 
 <FaBeer color="currentColor" size={24}/>

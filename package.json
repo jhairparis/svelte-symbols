@@ -1,6 +1,6 @@
 {
   "name": "svelte-symbols",
-  "version": "2.1.1",
+  "version": "3.0.0",
   "description": "Most popular icon pack for svelte",
   "keywords": [
     "svelte",
@@ -15,12 +15,9 @@
     "email": "illustriousloop@gmail.com",
     "url": "https://jhairparis.com"
   },
-  "main": "dist/index.js",
-  "svelte": "dist/index.js",
+  "main": "index.js",
+  "svelte": "index.js",
   "type": "module",
-  "files": [
-    "dist"
-  ],
   "license": "MIT",
   "repository": {
     "type": "git",

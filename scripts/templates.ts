@@ -9,15 +9,12 @@ export default function fileFormat(
 			return (
 				`<script>// THIS FILE IS AUTO GENERATED\n
           export let size= 24;
-          export let color;
+          export let color='currentColor';
+		  let className;
+		  export { className as class};
         </script>\n` + `${iconData}\n`
 			);
-		case 'fileExport':
-			return (
-				`import ${formattedName} from "./${formattedName}.svelte";\n` +
-				`export {${formattedName}};\n`
-			);
-		case 'dts':
+		case 'svelteDTS':
 			return `
 /** @typedef {typeof __propDef.props}  ${formattedName}Props */
 /** @typedef {typeof __propDef.events} ${formattedName}Events */
@@ -26,6 +23,7 @@ export default class ${formattedName} extends SvelteComponentTyped<{
     [x: string]: any;
     color?: string;
     size?: number;
+    class?: string;
 }, {
     [evt: string]: CustomEvent<any>;
 }, {}> {
@@ -39,6 +37,7 @@ declare const __propDef: {
         [x: string]: any;
         color?: string;
         size?: number;
+		class?: string;
     };
     events: {
         [evt: string]: CustomEvent<any>;
@@ -47,8 +46,6 @@ declare const __propDef: {
 };
 export {};
 `;
-		case 'end':
-			return `export * from './${id}';\n`;
 		default:
 			throw new Error(`Unknown type: ${type}`);
 	}

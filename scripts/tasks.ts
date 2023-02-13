@@ -17,42 +17,27 @@ export async function dirInit(home: string) {
 	const write = (filePath, str) =>
 		fs.writeFile(path.resolve(home, ...filePath), str, 'utf8').catch(ignore);
 
-	const initFiles = ['index.js', 'index.d.ts'];
-
 	for (const icon of icons) {
 		await fs.mkdir(path.resolve(home, icon.id)).catch(ignore);
-
-		await write([icon.id, 'index.js'], '// THIS FILE IS AUTO GENERATED\n');
 	}
 
-	for (const file of initFiles) {
-		if (file === 'index.d.ts') {
-			await write([file], '// THIS FILE IS AUTO GENERATED One\n');
-			continue;
-		}
-		await write([file], '// THIS FILE IS AUTO GENERATED\n');
-	}
-
+	await fs.mkdir(path.resolve(home, 'lib')).catch(ignore);
 	await fs.copyFile(path.resolve(home, '../README.md'), path.resolve(home, 'README.md'));
-
+	await fs.copyFile(path.resolve(home, '../package.json'), path.resolve(home, 'package.json'));
 	await fs.copyFile(path.resolve(home, '../LICENSE'), path.resolve(home, 'LICENSE'));
 }
 
-export async function writeIconModuleFiles(icon: IconDefinition, home: string) {
+export async function writeIconModuleFiles(icon: IconDefinition, home: string): Promise<string[]> {
 	const exists = new Set(); // for remove duplicate
+	const NameIcons: string[] = [];
 
-	await fs.appendFile(
-		path.resolve(home, icon.id, `index.d.ts`),
-		"// THIS FILE IS AUTO GENERATED\n",
-		'utf8'
-	);
 	for (const content of icon.contents) {
 		const files = await getIconFiles(content);
 
 		for (const file of files) {
 			const svgStrRaw = await fs.readFile(file, 'utf8');
 
-			const svgClean = svgo(svgStrRaw);
+			const svgClean = svgo(svgStrRaw, icon.id === 'tb');
 
 			const rawName = path.basename(file, path.extname(file));
 			const pascalName = camelcase(rawName, { pascalCase: true });
@@ -60,22 +45,43 @@ export async function writeIconModuleFiles(icon: IconDefinition, home: string) {
 
 			if (exists.has(name)) continue;
 			exists.add(name);
+			NameIcons.push(name);
 
-			const fileSvelte = fileFormat(name, svgClean, 'svelte');
+			const fileSvelte = fileFormat(name, svgClean, 'svelte', icon.id);
 			await fs.writeFile(path.resolve(home, icon.id, `${name}.svelte`), fileSvelte, 'utf8');
 
-			const fileExp = fileFormat(name, svgClean, 'fileExport');
-			await fs.appendFile(path.resolve(home, icon.id, `index.js`), fileExp, 'utf8');
-
-			const dts = fileFormat(name, svgClean, 'dts');
-			await fs.writeFile(path.resolve(home, icon.id, `${name}.svelte.d.ts`), dts, 'utf8');
-
-			await fs.appendFile(path.resolve(home, icon.id, `index.d.ts`), fileExp, 'utf8');
+			const svelteDTS = fileFormat(name, svgClean, 'svelteDTS');
+			await fs.writeFile(path.resolve(home, icon.id, `${name}.svelte.d.ts`), svelteDTS, 'utf8');
 
 			exists.add(file);
 		}
 	}
-	const endRes = fileFormat('', '', 'end', icon.id);
-	await fs.appendFile(path.resolve(home, icon.id, `../index.js`), endRes, 'utf8');
-	await fs.appendFile(path.resolve(home, icon.id, `../index.d.ts`), endRes, 'utf8');
+	return NameIcons;
+}
+
+export async function writeIconsManifest(home: string, namesIcons: any[]) {
+	const writeObj = icons.map((icon) => ({
+		id: icon.id,
+		name: icon.name,
+		projectUrl: icon.projectUrl,
+		license: icon.license,
+		licenseUrl: icon.licenseUrl
+	}));
+	const manifest = JSON.stringify(writeObj, null, 2);
+
+	const dts =
+		'interface IconManifest {\n  id: string;\n  name: string;\n  projectUrl: string; license: string;\n  licenseUrl: string;\n}\n' +
+		'type icons = {	id: string; name:string; content: string[];};' +
+		'declare const IconsManifest:IconManifest[];\n' +
+		'export default IconsManifest;' +
+		'export declare const namesAllIcons: icons[];';
+
+	await fs.writeFile(
+		path.resolve(home, 'lib', 'iconsManifest.js'),
+		`const IconsManifest = ${manifest}\n` +
+			`export default IconsManifest;` +
+			` export const namesAllIcons = ${JSON.stringify(namesIcons)};`,
+		'utf8'
+	);
+	await fs.writeFile(path.resolve(home, 'lib', 'iconsManifest.d.ts'), dts, 'utf8');
 }
